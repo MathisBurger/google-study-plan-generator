@@ -4,6 +4,7 @@ import LoginWithGooglePrompt from "../components/generator/LoginWithGooglePrompt
 import {useEffect, useState} from "react";
 import GoogleLoginAlert from "../components/generator/GoogleLoginAlert";
 import SelectLessonTimes from "../components/generator/SelectLessonTimes";
+import {LessonTimes} from "../typings/LessonTimes";
 
 enum Step {
     Login,
@@ -18,6 +19,7 @@ const Generator: NextPage = () => {
 
     const calendar = useCalendar();
     const [step, setStep] = useState<Step>(Step.Login);
+    const [lessonTimes, setLessonTimes] = useState<LessonTimes>([]);
 
     return (
         <div className="home-container">
@@ -28,7 +30,7 @@ const Generator: NextPage = () => {
                 <GoogleLoginAlert />
             )}
             {step === Step.SelectLessonTimes && (
-                <SelectLessonTimes nextStep={() => setStep(Step.EnterTimetable)} setLessonTimes={() => {}} />
+                <SelectLessonTimes nextStep={() => setStep(Step.EnterTimetable)} setLessonTimes={(times) => setLessonTimes(times)} />
             )}
         </div>
     );
