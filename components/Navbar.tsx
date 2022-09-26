@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
                             <a className="nav-link pointer-cursor" aria-current="page" onClick={() => router.push("/")}>Home</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link pointer-cursor" onClick={() => router.push("/generator")}>Link</a>
+                            <a className="nav-link pointer-cursor" onClick={() => router.push("/generator")}>Generator</a>
                         </li>
                     </ul>
                 </div>
