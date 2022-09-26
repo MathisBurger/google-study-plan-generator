@@ -3,6 +3,7 @@ import useCalendar from "../hooks/useCalendar";
 import LoginWithGooglePrompt from "../components/generator/LoginWithGooglePrompt";
 import {useEffect, useState} from "react";
 import GoogleLoginAlert from "../components/generator/GoogleLoginAlert";
+import SelectLessonTimes from "../components/generator/SelectLessonTimes";
 
 enum Step {
     Login,
@@ -27,7 +28,7 @@ const Generator: NextPage = () => {
                 <GoogleLoginAlert />
             )}
             {step === Step.SelectLessonTimes && (
-                <h1>Newer GTS</h1>
+                <SelectLessonTimes nextStep={() => setStep(Step.EnterTimetable)} setLessonTimes={() => {}} />
             )}
         </div>
     );
