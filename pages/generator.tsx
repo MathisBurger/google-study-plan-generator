@@ -6,12 +6,12 @@ import GoogleLoginAlert from "../components/generator/GoogleLoginAlert";
 import SelectLessonTimes from "../components/generator/SelectLessonTimes";
 import {LessonTimes, Timetable} from "../typings/LessonTimes";
 import EnterTimetableForm from "../components/generator/EnterTimetableForm";
+import SubmitForm from "../components/generator/SubmitForm";
 
 enum Step {
     Login,
     SelectLessonTimes,
     EnterTimetable,
-    CreateNewCalendar,
     Submit
 }
 
@@ -37,9 +37,12 @@ const Generator: NextPage = () => {
             {step === Step.EnterTimetable && (
                 <EnterTimetableForm
                     lessonTimes={lessonTimes}
-                    nextStep={() => setStep(Step.CreateNewCalendar)}
+                    nextStep={() => setStep(Step.Submit)}
                     setTimetableParent={(table) => setTimetable(table)}
                 />
+            )}
+            {step === Step.Submit && (
+                <SubmitForm timetable={timetable} />
             )}
         </div>
     );
