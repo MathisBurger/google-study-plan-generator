@@ -48,7 +48,7 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
               <thead>
                 <tr>
                     {days.map((day, index) => (
-                        <th scope="col">
+                        <th scope="col" key={day + index}>
                             <input className="form-control" value={day} onChange={(e) => changeDay(e.target.value, index)} />
                         </th>
                     ))}
@@ -65,7 +65,7 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
           <h3>Lessons</h3>
           <div className="row">
               {lessons.map((lesson, index) => (
-                  <div className="col-md-4">
+                  <div className="col-md-4" key={lesson.startTime + index}>
                       <div className="col">
                           <div className="row-md-6">
                               <b>Lesson {index+1}</b>
