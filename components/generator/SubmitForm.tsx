@@ -2,7 +2,6 @@ import {Timetable} from "../../typings/LessonTimes";
 import React, {useMemo} from "react";
 import useCalendar from "../../hooks/useCalendar";
 import TimeCalendarType from "react-google-calendar-api";
-import ApiCalendar from "react-google-calendar-api";
 
 interface SubmitFormProps {
     timetable: Timetable;
@@ -62,18 +61,21 @@ const SubmitForm: React.FC<SubmitFormProps> = ({timetable}) => {
     const submit = async () => {
         if (calendar) {
              const newCal = await calendar.createCalendar(calendarName);
+             console.log("created calendar");
              const calId = newCal.result.id;
             for (let i=1; i<=timetable.length; i++) {
+                console.log("iterations 123");
                 for (const lesson of timetable[i-1].lessons) {
-                    const event = await calendar.createEvent({start: getGoogleDate(i, lesson.startTime) as any, end: getGoogleDate(i, lesson.endTime) as any})
-                    const updatedEvent = {summary: lesson.name, recurrence: [
-                            'RRULE:FREQ=WEEKLY'
-                        ],};
-                    const afterUpdate = await calendar.updateEvent(updatedEvent, event.result.id);
-                    console.log(afterUpdate);
+                    console.log("iterations");
+                    //const event = await calendar.createEvent({start: getGoogleDate(i, lesson.startTime), end: getGoogleDate(i, lesson.endTime)});
+                    //console.log(event);
                 }
             }
+            console.log("before");
+            const event = await calendar.createEvent({start: getGoogleDate(1, timetable[0].lessons[0].startTime), end: getGoogleDate(1, timetable[0].lessons[0].endTime)}, calId);
+            console.log(event);
             // TODO: Create events for all timetable entries
+            console.log("after");
         }
     }
 
