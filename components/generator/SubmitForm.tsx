@@ -1,5 +1,5 @@
 import {Timetable} from "../../typings/LessonTimes";
-import React, {useMemo} from "react";
+import React, {useMemo, useState} from "react";
 import useCalendar from "../../hooks/useCalendar";
 import TimeCalendarType from "react-google-calendar-api";
 
@@ -10,6 +10,7 @@ interface SubmitFormProps {
 const SubmitForm: React.FC<SubmitFormProps> = ({timetable}) => {
 
     const calendar = useCalendar();
+    const [loading, setLoading] = useState<boolean>(false);
 
     const calendarName = useMemo<string>(() => {
         return "Timetable - " + new Date().toLocaleDateString("en-US");
@@ -20,8 +21,9 @@ const SubmitForm: React.FC<SubmitFormProps> = ({timetable}) => {
         currentDate.setHours(0);
         currentDate.setMinutes(0);
         currentDate.setSeconds(0);
+        console.log(currentDate.toLocaleDateString('en-US', {weekday: 'short'}));
         while (currentDate.toLocaleDateString('en-US', {weekday: 'short'}) !== name) {
-            currentDate.setDate(currentDate.getDate() + (24 * 60 * 60 * 1000));
+            currentDate.setTime(currentDate.getTime() + (24 * 60 * 60 * 1000));
         }
         return currentDate;
     }
@@ -60,22 +62,22 @@ const SubmitForm: React.FC<SubmitFormProps> = ({timetable}) => {
 
     const submit = async () => {
         if (calendar) {
+            setLoading(true);
              const newCal = await calendar.createCalendar(calendarName);
-             console.log("created calendar");
+             console.log(newCal);
              const calId = newCal.result.id;
             for (let i=1; i<=timetable.length; i++) {
-                console.log("iterations 123");
                 for (const lesson of timetable[i-1].lessons) {
-                    console.log("iterations");
-                    //const event = await calendar.createEvent({start: getGoogleDate(i, lesson.startTime), end: getGoogleDate(i, lesson.endTime)});
-                    //console.log(event);
+                    console.log(getGoogleDate(i, lesson.startTime));
+                    await calendar.createEvent({
+                        start: getGoogleDate(i, lesson.startTime) as any,
+                        end: getGoogleDate(i, lesson.endTime) as any,
+                        summary: lesson.name,
+                        recurrence: ['RRULE:FREQ=WEEKLY']
+                        } as any, calId);
                 }
             }
-            console.log("before");
-            const event = await calendar.createEvent({start: getGoogleDate(1, timetable[0].lessons[0].startTime), end: getGoogleDate(1, timetable[0].lessons[0].endTime)}, calId);
-            console.log(event);
-            // TODO: Create events for all timetable entries
-            console.log("after");
+            setLoading(false);
         }
     }
 
@@ -85,7 +87,12 @@ const SubmitForm: React.FC<SubmitFormProps> = ({timetable}) => {
                 Your calendar will be named "{calendarName}". Click the submit button to perform the timetable creation in your
                 google calendar.
             </h2>
-            <button className="btn btn-lg btn-primary" onClick={submit}>Submit</button>
+            {loading && (
+                <div className="alert alert-primary">
+                    The calendar is being created at the moment
+                </div>
+            )}
+            <button className="btn btn-lg btn-primary" disabled={loading} onClick={submit}>Submit</button>
         </div>
     );
 }
