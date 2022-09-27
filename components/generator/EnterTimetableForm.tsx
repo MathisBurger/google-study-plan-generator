@@ -44,13 +44,13 @@ const EnterTimetableForm: React.FC<EnterTimetableFormProps> = ({lessonTimes, set
         <div className="container">
             <div className="row">
                 {timetable.map((day, dayId) => (
-                    <div className="col-md-2">
+                    <div className="col-md-2" key={day.name + dayId}>
                         <div className="col">
                             <div className="row-md-2">
                                 <b>{day.name}</b>
                             </div>
                             {day.lessons.map((lesson, lessonId) => (
-                                <div className="row-md-2 mt-2">
+                                <div className="row-md-2 mt-2" key={dayId + lesson.startTime + lessonId}>
                                     <input
                                         type="text"
                                         className="form-control"
