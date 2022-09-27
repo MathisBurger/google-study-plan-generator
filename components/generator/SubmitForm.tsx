@@ -82,7 +82,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({timetable}) => {
     return (
         <div className="container">
             <h2>
-                Your calendar will be named "{calendarName}". Click the submit button to perform the timetable creation in your
+                Your calendar will be named &quot;{calendarName}&quot;. Click the submit button to perform the timetable creation in your
                 google calendar.
             </h2>
             {loading && (
