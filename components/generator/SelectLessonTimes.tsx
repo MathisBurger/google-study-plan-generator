@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Lesson, LessonTimes} from "../../typings/LessonTimes";
+import SavePresetModal from "../presets/SavePresetModal";
 
 interface SelectLessonTimesProps {
     nextStep: () => void;
@@ -15,6 +16,8 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
 
     const [days, setDays] = useState<string[]>(['Monday']);
     const [lessons, setLessons] = useState<Lesson[]>([]);
+    const [savePresetOpen, setSavePresetOpen] = useState<boolean>(false);
+    const [preset, setPreset] = useState<LessonTimes>([]);
 
     const changeDay = (newValue: string, index: number) => {
         let arr = [...days];
@@ -29,7 +32,15 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
     }
 
     const saveAsPreset = () => {
-
+        const lessonTimes: LessonTimes = [];
+        for (const day of days) {
+            lessonTimes.push({
+                name: day,
+                lessons: lessons
+            });
+        }
+        setPreset(lessonTimes);
+        setSavePresetOpen(true);
     }
 
     const goToNextStep = () => {
@@ -130,6 +141,9 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
                   </button>
               </div>
           </div>
+          {savePresetOpen && (
+              <SavePresetModal preset={preset} onClose={() => setSavePresetOpen(false)} />
+          )}
       </div>
     );
 }
