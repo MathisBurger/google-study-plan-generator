@@ -64,11 +64,9 @@ const SubmitForm: React.FC<SubmitFormProps> = ({timetable}) => {
         if (calendar) {
             setLoading(true);
              const newCal = await calendar.createCalendar(calendarName);
-             console.log(newCal);
              const calId = newCal.result.id;
             for (let i=1; i<=timetable.length; i++) {
                 for (const lesson of timetable[i-1].lessons) {
-                    console.log(getGoogleDate(i, lesson.startTime));
                     await calendar.createEvent({
                         start: getGoogleDate(i, lesson.startTime) as any,
                         end: getGoogleDate(i, lesson.endTime) as any,
