@@ -2,6 +2,7 @@ import {Timetable} from "../../typings/LessonTimes";
 import React, {useMemo} from "react";
 import useCalendar from "../../hooks/useCalendar";
 import TimeCalendarType from "react-google-calendar-api";
+import ApiCalendar from "react-google-calendar-api";
 
 interface SubmitFormProps {
     timetable: Timetable;
@@ -55,7 +56,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({timetable}) => {
 
     const getGoogleDate = (dayId: number, time: string): TimeCalendarType => {
         const date = getDateTimeString(dayId, time);
-        return {timeZone: 'UTC', dateTime: date ?? ''};
+        return {timeZone: 'UTC', dateTime: date ?? ''} as any;
     }
 
     const submit = async () => {
@@ -64,7 +65,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({timetable}) => {
              const calId = newCal.result.id;
             for (let i=1; i<=timetable.length; i++) {
                 for (const lesson of timetable[i-1].lessons) {
-                    const event = await calendar.createEvent({start: getGoogleDate(i, lesson.startTime), end: getGoogleDate(i, lesson.endTime)})
+                    const event = await calendar.createEvent({start: getGoogleDate(i, lesson.startTime) as any, end: getGoogleDate(i, lesson.endTime) as any})
                     const updatedEvent = {summary: lesson.name, recurrence: [
                             'RRULE:FREQ=WEEKLY'
                         ],};
