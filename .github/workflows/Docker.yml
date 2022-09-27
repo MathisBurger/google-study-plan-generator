@@ -1,11 +1,6 @@
 name: Docker
 
 on:
-  pull_request:
-    branches:
-      - main
-    types:
-      - auto_merge_enabled
   push:
     branches:
       - main
