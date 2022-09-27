@@ -28,6 +28,10 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
         setLessons(arr);
     }
 
+    const saveAsPreset = () => {
+
+    }
+
     const goToNextStep = () => {
         const lessonTimes: LessonTimes = [];
         for (const day of days) {
@@ -109,9 +113,23 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
               </div>
             </div>
 
-          <button className="btn btn-lg btn-primary mt-3" onClick={goToNextStep}>
-              Next step
-          </button>
+          <div className="row mt-3">
+              <div className="col-md-3">
+                  <button className="btn btn-lg btn-primary" onClick={goToNextStep}>
+                      Next step
+                  </button>
+              </div>
+              <div className="col-md-4">
+                  <button className="btn btn-outline-primary btn-lg" onClick={saveAsPreset}>
+                      Save as preset
+                  </button>
+              </div>
+              <div className="col-md-3">
+                  <button className="btn btn-outline-primary btn-lg" onClick={saveAsPreset}>
+                      Load preset
+                  </button>
+              </div>
+          </div>
       </div>
     );
 }
