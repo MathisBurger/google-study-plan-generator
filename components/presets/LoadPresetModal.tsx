@@ -1,14 +1,10 @@
-import {LessonTimes} from "../../typings/LessonTimes";
-import React, {useCallback, useMemo, useState} from "react";
+import {LessonTimes, Preset} from "../../typings/LessonTimes";
+import React, {useMemo, useState} from "react";
+import {defaultPreset} from "../../defaults";
 
 interface LoadPresetModalProps {
     loadPreset: (preset: LessonTimes) => void;
     onClose: () => void;
-}
-
-interface Preset {
-    name: string;
-    preset: LessonTimes;
 }
 
 const LoadPresetModal: React.FC<LoadPresetModalProps> = ({loadPreset, onClose}) => {
@@ -18,9 +14,9 @@ const LoadPresetModal: React.FC<LoadPresetModalProps> = ({loadPreset, onClose}) 
     const presets = useMemo<Preset[]>(() => {
         const presets = localStorage.getItem('presets');
         if (presets === null) {
-            return [];
+            return [defaultPreset];
         } else {
-            return JSON.parse(presets);
+            return [defaultPreset, ...JSON.parse(presets)];
         }
     }, [localStorage.getItem('presets')]);
 
@@ -57,7 +53,7 @@ const LoadPresetModal: React.FC<LoadPresetModalProps> = ({loadPreset, onClose}) 
                         </ul>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-primary" onClick={onSave}>Save as preset</button>
+                        <button type="button" className="btn btn-primary" onClick={onSave}>Load preset</button>
                         <button type="button" className="btn btn-secondary" onClick={onClose}>Close</button>
                     </div>
                 </div>

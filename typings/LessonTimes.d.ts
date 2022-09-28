@@ -19,4 +19,9 @@ export interface ExtendedDay {
     lessons: ExtendedLesson[];
 }
 
+export interface Preset {
+    name: string;
+    preset: LessonTimes;
+}
+
 export type Timetable = ExtendedDay[];
