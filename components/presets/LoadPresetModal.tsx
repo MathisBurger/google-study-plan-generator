@@ -24,8 +24,6 @@ const LoadPresetModal: React.FC<LoadPresetModalProps> = ({loadPreset, onClose}) 
 
     const [selectedPreset, setSelectedPreset] = useState<number>(0);
 
-    const preloadedPresets = localStorage.getItem('presets');
-
     const presets = useMemo<Preset[]>(() => {
         const presets = localStorage.getItem('presets');
         if (presets === null) {
@@ -33,7 +31,7 @@ const LoadPresetModal: React.FC<LoadPresetModalProps> = ({loadPreset, onClose}) 
         } else {
             return [defaultPreset, ...JSON.parse(presets)];
         }
-    }, [preloadedPresets]);
+    }, []);
 
     const onSave = () => {
         loadPreset(presets[selectedPreset].preset);
