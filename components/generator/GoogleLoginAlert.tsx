@@ -1,6 +1,11 @@
 import React from "react";
 
-
+/**
+ * General purpose alert that is displayed to remind the
+ * user to log in with his the Google account
+ *
+ * @constructor
+ */
 const GoogleLoginAlert: React.FC = () => {
 
     return (

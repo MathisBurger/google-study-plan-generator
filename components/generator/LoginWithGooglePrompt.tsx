@@ -1,11 +1,19 @@
-import React, {useEffect} from "react";
+import React from "react";
 import useCalendar from "../../hooks/useCalendar";
 
 interface LoginWithGooglePromptProps {
+    /**
+     * Goes to the next step
+     */
     nextStep: () => void;
 }
 
-
+/**
+ * Prompts the user to log in with his google
+ * account.
+ *
+ * @constructor
+ */
 const LoginWithGooglePrompt: React.FC<LoginWithGooglePromptProps> = ({nextStep}) => {
 
     const calendar = useCalendar();

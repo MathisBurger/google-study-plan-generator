@@ -1,5 +1,4 @@
 import {NextPage} from "next";
-import useCalendar from "../hooks/useCalendar";
 import LoginWithGooglePrompt from "../components/generator/LoginWithGooglePrompt";
 import {useState} from "react";
 import GoogleLoginAlert from "../components/generator/GoogleLoginAlert";
@@ -8,6 +7,9 @@ import {LessonTimes, Timetable} from "../typings/LessonTimes";
 import EnterTimetableForm from "../components/generator/EnterTimetableForm";
 import SubmitForm from "../components/generator/SubmitForm";
 
+/**
+ * All steps of the stepper process
+ */
 enum Step {
     Login,
     SelectLessonTimes,
@@ -15,10 +17,13 @@ enum Step {
     Submit
 }
 
-
+/**
+ * The general purpose generator page.
+ *
+ * @constructor
+ */
 const Generator: NextPage = () => {
 
-    const calendar = useCalendar();
     const [step, setStep] = useState<Step>(Step.Login);
     const [lessonTimes, setLessonTimes] = useState<LessonTimes>([]);
     const [timetable, setTimetable] = useState<Timetable>([]);

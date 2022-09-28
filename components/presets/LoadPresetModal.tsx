@@ -3,10 +3,23 @@ import React, {useMemo, useState} from "react";
 import {defaultPreset} from "../../defaults";
 
 interface LoadPresetModalProps {
+    /**
+     * Loads the preset into the view
+     *
+     * @param preset The preset that should be loaded
+     */
     loadPreset: (preset: LessonTimes) => void;
+    /**
+     * Is executed to close the modal
+     */
     onClose: () => void;
 }
 
+/**
+ * A modal used to load lesson time presets.
+ *
+ * @constructor
+ */
 const LoadPresetModal: React.FC<LoadPresetModalProps> = ({loadPreset, onClose}) => {
 
     const [selectedPreset, setSelectedPreset] = useState<number>(0);

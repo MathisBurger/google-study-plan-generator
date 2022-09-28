@@ -2,10 +2,21 @@ import {LessonTimes} from "../../typings/LessonTimes";
 import React, {useState} from "react";
 
 interface SavePresetModalProps {
+    /**
+     * The preset that should be saved
+     */
     preset: LessonTimes;
+    /**
+     * Is executed to close the modal
+     */
     onClose: () => void;
 }
 
+/**
+ * A modal that is used for saving presets in the local storage
+ *
+ * @constructor
+ */
 const SavePresetModal: React.FC<SavePresetModalProps> = ({preset, onClose}) => {
 
     const [presetName, setPresetName] = useState<string>('');

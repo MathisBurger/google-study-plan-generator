@@ -1,7 +1,11 @@
 import React from "react";
 import {useRouter} from "next/router";
 
-
+/**
+ * Component that displays the info text on the homepage.
+ *
+ * @constructor
+ */
 const InfoText: React.FC = () => {
 
     const router = useRouter();

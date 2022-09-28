@@ -4,15 +4,31 @@ import SavePresetModal from "../presets/SavePresetModal";
 import LoadPresetModal from "../presets/LoadPresetModal";
 
 interface SelectLessonTimesProps {
+    /**
+     * Goes to the next step
+     */
     nextStep: () => void;
+    /**
+     * Sets the lesson times
+     *
+     * @param times The lesson times
+     */
     setLessonTimes: (times: LessonTimes) => void;
 }
 
+/**
+ * Default lesson
+ */
 const defaultLesson: Lesson = {
     startTime: "00:00",
     endTime: "00:00"
 };
 
+/**
+ * Component that is used to select the lesson times
+ *
+ * @constructor
+ */
 const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLessonTimes}) => {
 
     const [days, setDays] = useState<string[]>(['Monday']);

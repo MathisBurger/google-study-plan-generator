@@ -1,5 +1,8 @@
 import {Lesson, Preset} from "./typings/LessonTimes";
 
+/**
+ * Default lessons
+ */
 const defaultLessons: Lesson[] = [
     {startTime: '07:40', endTime: '08:25'},
     {startTime: '08:30', endTime: '09:15'},
@@ -10,6 +13,9 @@ const defaultLessons: Lesson[] = [
     {startTime: '13:00', endTime: '13:45'}
 ]
 
+/**
+ * Default preset
+ */
 export const defaultPreset: Preset = {
     name: 'Default',
     preset: [
