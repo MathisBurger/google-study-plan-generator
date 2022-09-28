@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Lesson, LessonTimes} from "../../typings/LessonTimes";
 import SavePresetModal from "../presets/SavePresetModal";
+import LoadPresetModal from "../presets/LoadPresetModal";
 
 interface SelectLessonTimesProps {
     nextStep: () => void;
@@ -17,6 +18,7 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
     const [days, setDays] = useState<string[]>(['Monday']);
     const [lessons, setLessons] = useState<Lesson[]>([]);
     const [savePresetOpen, setSavePresetOpen] = useState<boolean>(false);
+    const [loadPresetOpen, setLoadPresetOpen] = useState<boolean>(false);
     const [preset, setPreset] = useState<LessonTimes>([]);
 
     const changeDay = (newValue: string, index: number) => {
@@ -53,6 +55,16 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
         }
         setLessonTimes(lessonTimes);
         nextStep();
+    }
+
+    const loadPreset = (p: LessonTimes) => {
+        const days = p.map((d) => d.name);
+        let lessons: Lesson[] = [];
+        if (days.length > 0) {
+            lessons = p[0].lessons;
+        }
+        setDays(days);
+        setLessons(lessons);
     }
 
 
@@ -136,13 +148,16 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
                   </button>
               </div>
               <div className="col-md-3">
-                  <button className="btn btn-outline-primary btn-lg" onClick={saveAsPreset}>
+                  <button className="btn btn-outline-primary btn-lg" onClick={() => setLoadPresetOpen(true)}>
                       Load preset
                   </button>
               </div>
           </div>
           {savePresetOpen && (
               <SavePresetModal preset={preset} onClose={() => setSavePresetOpen(false)} />
+          )}
+          {loadPresetOpen && (
+              <LoadPresetModal loadPreset={loadPreset} onClose={() => setLoadPresetOpen(false)} />
           )}
       </div>
     );
