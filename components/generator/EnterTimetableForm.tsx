@@ -2,11 +2,26 @@ import React, {useEffect, useState} from "react";
 import {LessonTimes, Timetable} from "../../typings/LessonTimes";
 
 interface EnterTimetableFormProps {
+    /**
+     * The initial lesson times
+     */
     lessonTimes: LessonTimes;
+    /**
+     *  Sets the timetable
+     *
+     * @param timetable The timetable
+     */
     setTimetableParent: (timetable: Timetable) => void;
+    /**
+     * Goes to the next step
+     */
     nextStep: () => void;
 }
 
+/**
+ * Component that is used to enter the timetable
+ * based on the lesson times that are given.
+ */
 const EnterTimetableForm: React.FC<EnterTimetableFormProps> = ({lessonTimes, setTimetableParent, nextStep}) => {
 
     const [timetable, setTimetable] = useState<Timetable>([]);

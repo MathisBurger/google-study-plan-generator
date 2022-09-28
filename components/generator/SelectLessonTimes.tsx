@@ -1,20 +1,41 @@
 import React, {useState} from "react";
 import {Lesson, LessonTimes} from "../../typings/LessonTimes";
+import SavePresetModal from "../presets/SavePresetModal";
+import LoadPresetModal from "../presets/LoadPresetModal";
 
 interface SelectLessonTimesProps {
+    /**
+     * Goes to the next step
+     */
     nextStep: () => void;
+    /**
+     * Sets the lesson times
+     *
+     * @param times The lesson times
+     */
     setLessonTimes: (times: LessonTimes) => void;
 }
 
+/**
+ * Default lesson
+ */
 const defaultLesson: Lesson = {
     startTime: "00:00",
     endTime: "00:00"
 };
 
+/**
+ * Component that is used to select the lesson times
+ *
+ * @constructor
+ */
 const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLessonTimes}) => {
 
     const [days, setDays] = useState<string[]>(['Monday']);
     const [lessons, setLessons] = useState<Lesson[]>([]);
+    const [savePresetOpen, setSavePresetOpen] = useState<boolean>(false);
+    const [loadPresetOpen, setLoadPresetOpen] = useState<boolean>(false);
+    const [preset, setPreset] = useState<LessonTimes>([]);
 
     const changeDay = (newValue: string, index: number) => {
         let arr = [...days];
@@ -28,6 +49,18 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
         setLessons(arr);
     }
 
+    const saveAsPreset = () => {
+        const lessonTimes: LessonTimes = [];
+        for (const day of days) {
+            lessonTimes.push({
+                name: day,
+                lessons: lessons
+            });
+        }
+        setPreset(lessonTimes);
+        setSavePresetOpen(true);
+    }
+
     const goToNextStep = () => {
         const lessonTimes: LessonTimes = [];
         for (const day of days) {
@@ -38,6 +71,16 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
         }
         setLessonTimes(lessonTimes);
         nextStep();
+    }
+
+    const loadPreset = (p: LessonTimes) => {
+        const days = p.map((d) => d.name);
+        let lessons: Lesson[] = [];
+        if (days.length > 0) {
+            lessons = p[0].lessons;
+        }
+        setDays(days);
+        setLessons(lessons);
     }
 
 
@@ -109,9 +152,29 @@ const SelectLessonTimes: React.FC<SelectLessonTimesProps> = ({nextStep, setLesso
               </div>
             </div>
 
-          <button className="btn btn-lg btn-primary mt-3" onClick={goToNextStep}>
-              Next step
-          </button>
+          <div className="row mt-3">
+              <div className="col-md-3">
+                  <button className="btn btn-lg btn-primary" onClick={goToNextStep}>
+                      Next step
+                  </button>
+              </div>
+              <div className="col-md-4">
+                  <button className="btn btn-outline-primary btn-lg" onClick={saveAsPreset}>
+                      Save as preset
+                  </button>
+              </div>
+              <div className="col-md-3">
+                  <button className="btn btn-outline-primary btn-lg" onClick={() => setLoadPresetOpen(true)}>
+                      Load preset
+                  </button>
+              </div>
+          </div>
+          {savePresetOpen && (
+              <SavePresetModal preset={preset} onClose={() => setSavePresetOpen(false)} />
+          )}
+          {loadPresetOpen && (
+              <LoadPresetModal loadPreset={loadPreset} onClose={() => setLoadPresetOpen(false)} />
+          )}
       </div>
     );
 }

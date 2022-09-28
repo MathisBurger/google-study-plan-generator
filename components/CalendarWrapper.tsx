@@ -3,6 +3,11 @@ import {CalendarContext} from "../hooks/useCalendar";
 import ApiCalendar from "react-google-calendar-api";
 
 
+/**
+ * Component that wraps the calendar context to the children
+ *
+ * @constructor
+ */
 const CalendarWrapper: React.FC<PropsWithChildren<any>> = ({children}) => {
 
     const [apiCalendar, setApiCalendar] = useState<ApiCalendar|null>(null);

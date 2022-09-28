@@ -4,9 +4,18 @@ import useCalendar from "../../hooks/useCalendar";
 import TimeCalendarType from "react-google-calendar-api";
 
 interface SubmitFormProps {
+    /**
+     * The timetable that should be submitted
+     */
     timetable: Timetable;
 }
 
+/**
+ * Component that is used to create your Google calendar
+ * from the timetable you entered before.
+ *
+ * @constructor
+ */
 const SubmitForm: React.FC<SubmitFormProps> = ({timetable}) => {
 
     const calendar = useCalendar();
@@ -67,12 +76,14 @@ const SubmitForm: React.FC<SubmitFormProps> = ({timetable}) => {
              const calId = newCal.result.id;
             for (let i=1; i<=timetable.length; i++) {
                 for (const lesson of timetable[i-1].lessons) {
-                    await calendar.createEvent({
-                        start: getGoogleDate(i, lesson.startTime) as any,
-                        end: getGoogleDate(i, lesson.endTime) as any,
-                        summary: lesson.name,
-                        recurrence: ['RRULE:FREQ=WEEKLY']
+                    if (lesson.name !== '') {
+                        await calendar.createEvent({
+                            start: getGoogleDate(i, lesson.startTime) as any,
+                            end: getGoogleDate(i, lesson.endTime) as any,
+                            summary: lesson.name,
+                            recurrence: ['RRULE:FREQ=WEEKLY']
                         } as any, calId);
+                    }
                 }
             }
             setLoading(false);
