@@ -61,7 +61,13 @@ const LoadPresetModal: React.FC<LoadPresetModalProps> = ({loadPreset, onClose}) 
                         <p>Select your preset here</p>
                         <ul className="list-group">
                             {presets.map((preset, index) => (
-                                <li className={getClassNameArray(index)} onClick={() => setSelectedPreset(index)}>{preset.name}</li>
+                                <li
+                                    className={getClassNameArray(index)}
+                                    onClick={() => setSelectedPreset(index)}
+                                    key={preset.name + index}
+                                >
+                                    {preset.name}
+                                </li>
                             ))}
                         </ul>
                     </div>
